@@ -117,35 +117,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const siBtn = document.getElementById('siBtn');
-            const noBtn = document.getElementById('noBtn');
-            const respuesta = document.getElementById('respuesta');
-            let movimientoInterval;
-
-            function moverBoton() {
-                const container = document.querySelector('.container');
-                const containerRect = container.getBoundingClientRect();
-                const btnRect = noBtn.getBoundingClientRect();
-                
-                const maxX = containerRect.width - btnRect.width;
-                const maxY = containerRect.height - btnRect.height;
-                
-                const newX = Math.random() * maxX;
-                const newY = Math.random() * maxY;
-                
-                noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
-            }
-
-            noBtn.addEventListener('mouseenter', () => {
-                movimientoInterval = setInterval(moverBoton, 50);
-            });
-
-            noBtn.addEventListener('mouseleave', () => {
-                clearInterval(movimientoInterval);
-                noBtn.style.transform = 'translate(0, 0)';
-            });
-
             siBtn.addEventListener('click', () => {
                 respuesta.classList.remove('hidden');
                 noBtn.style.display = 'none';
