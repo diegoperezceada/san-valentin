@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Gran Pregunta</title>
+    <title>Mi Gran Pregunta de San Valentín</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playwrite+IN:wght@100..400&display=swap" rel="stylesheet">    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff4d4d;
+            --secondary-color: #ff8e8e;
+            --text-color: #333;
+            --background-color: #fff;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,12 +22,12 @@
         }
 
         body {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
             overflow: hidden;
         }
 
@@ -28,28 +36,18 @@
             padding: 2rem;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 90%;
-            position: relative;
-            animation: fadeIn 1.5s ease-in;
-            z-index: 2;
+            animation: fadeIn 1.5s ease-out;
         }
 
         h1 {
             font-family: 'Dancing Script', cursive;
-            color: #ff4d4d;
+            color: var(--primary-color);
             font-size: 3rem;
             margin-bottom: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        p {
-            font-size: 1.1rem;
-            color: #444;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            padding: 0 1rem;
         }
 
         .buttons {
@@ -57,6 +55,7 @@
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
+            margin-top: 2rem;
         }
 
         button {
@@ -66,27 +65,38 @@
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Pacifico', cursive;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
         #siBtn {
-            background: #ff6b6b;
-            color: white;
+            background: var(--primary-color);
+            color: var(--background-color);
         }
 
         #noBtn {
-            background: #f0f0f0;
-            color: #444;
-            position: relative;
+            background: var(--background-color);
+            color: var(--text-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        #siBtn:hover, #noBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         #siBtn:hover {
-            transform: scale(1.1);
-            background: #ff4d4d;
+            background: var(--secondary-color);
+        }
+
+        #noBtn:hover {
+            background: var(--primary-color);
+            color: var(--background-color);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-50px); }
+            from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -97,13 +107,31 @@
         #respuesta {
             margin-top: 2rem;
             font-size: 2rem;
-            color: #ff4d4d;
+            color: var(--primary-color);
             padding: 1rem;
+            font-family: 'Dancing Script', cursive;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            button {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <main class="container">
         <h1>¿Inés, quieres ser mi San Valentín?</h1>        
         <div class="buttons">
             <button id="siBtn">¡Sí, acepto! 🌹</button>
@@ -113,16 +141,20 @@
         <div id="respuesta" class="hidden">
             ¡Será el mejor San Valentín de todos! 💞
         </div>
-    </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const siBtn = document.getElementById('siBtn');
+            const noBtn = document.getElementById('noBtn');
+            const respuesta = document.getElementById('respuesta');
+
             siBtn.addEventListener('click', () => {
                 respuesta.classList.remove('hidden');
                 noBtn.style.display = 'none';
                 siBtn.style.display = 'none';
                 
-                // Efecto de confeti
                 const duration = 3000;
                 const end = Date.now() + duration;
 
@@ -146,6 +178,16 @@
                         requestAnimationFrame(frame);
                     }
                 }());
+            });
+
+            noBtn.addEventListener('mouseover', () => {
+                const container = document.querySelector('.container');
+                const maxX = container.clientWidth - noBtn.clientWidth;
+                const maxY = container.clientHeight - noBtn.clientHeight;
+                
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = Math.random() * maxX + 'px';
+                noBtn.style.top = Math.random() * maxY + 'px';
             });
         });
     </script>
