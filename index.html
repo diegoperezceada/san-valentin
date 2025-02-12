@@ -113,10 +113,23 @@
             animation: pulse 2s infinite;
         }
 
+        #teAmo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-top: 1rem;
+            animation: zoomIn 1s ease-out;
+        }
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         @media (max-width: 480px) {
@@ -126,6 +139,9 @@
             button {
                 width: 100%;
                 margin-bottom: 1rem;
+            }
+            #teAmo {
+                font-size: 3rem;
             }
         }
     </style>
@@ -140,6 +156,7 @@
         
         <div id="respuesta" class="hidden">
             ¡Será el mejor San Valentín de todos! 💞
+            <div id="teAmo" class="hidden">Te amo ❤️</div>
         </div>
     </main>
 
@@ -149,9 +166,11 @@
             const siBtn = document.getElementById('siBtn');
             const noBtn = document.getElementById('noBtn');
             const respuesta = document.getElementById('respuesta');
+            const teAmo = document.getElementById('teAmo');
 
             siBtn.addEventListener('click', () => {
                 respuesta.classList.remove('hidden');
+                teAmo.classList.remove('hidden');
                 noBtn.style.display = 'none';
                 siBtn.style.display = 'none';
                 
